@@ -28,7 +28,6 @@
     <p class="js-moves"></p>
     <p class="js-score score"></p>
     
-
     <button onclick="
       score.wins = 0;
       score.losses = 0;
@@ -40,6 +39,11 @@
       document.querySelector('.js-moves').
         innerHTML = '';
     " class="reset-score-button">Reset Score</button>
+
+    <button class="auto-play-button js-auto-play-button" onclick="
+      autoplay();
+      updateButton();
+    ">Auto Play</button>
 
     <script src="scripts/rock-paper-scissors.js"></script>
   </body>

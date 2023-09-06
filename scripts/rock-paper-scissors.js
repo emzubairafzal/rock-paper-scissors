@@ -6,6 +6,37 @@ let score = JSON.parse(localStorage.getItem('score')) || {
 
 updateScoreElement();
 
+let isAutoPlaying = false;
+let intervalId;
+
+function autoplay() {
+  if (!isAutoPlaying) {
+    intervalId = setInterval(function() {
+      const playermove = pickcomputerMove();
+      playGame(playermove);
+    }, 1000);
+  
+    isAutoPlaying = true;
+  } else {
+    clearInterval(intervalId);
+    isAutoPlaying = false;
+  }
+  
+}
+
+function updateButton() {
+  const button = document.querySelector('.js-auto-play-button');
+
+  if (button.innerHTML === 'Auto Play') {
+    button.innerHTML = 'Stop';
+    button.classList.add('is-stop');
+  } else {
+    button.innerHTML = 'Auto Play';
+    button.classList.remove('is-stop');
+  }
+
+}
+
 function playGame(playermove) {
   const computerMove = pickcomputerMove();
   let result = '';
@@ -38,8 +69,6 @@ function playGame(playermove) {
     }
   }
 
-
-
   if (result === 'You win.') {
     score.wins += 1;
   } else if (result === 'You lose.') {
@@ -67,8 +96,6 @@ function updateScoreElement() {
   document.querySelector('.js-score')
     .innerHTML = `Wins: ${score.wins}, Losses: ${score.losses}, Ties: ${score.ties}`;
 }
-
-
 
 function pickcomputerMove() {
   const randomNumber = Math.random();
